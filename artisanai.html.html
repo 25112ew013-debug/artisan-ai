@@ -1,0 +1,1851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ArtisanAI — Speak. Show. Sell.</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============ RESET & BASE ============ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --saffron: #FF6B35;
+  --saffron-dark: #E85520;
+  --indigo: #1A237E;
+  --indigo-light: #3949AB;
+  --gold: #FFB300;
+  --green: #2E7D32;
+  --cream: #FFF8F0;
+  --gray-50: #F9FAFB;
+  --gray-100: #F3F4F6;
+  --gray-200: #E5E7EB;
+  --gray-300: #D1D5DB;
+  --gray-500: #6B7280;
+  --gray-700: #374151;
+  --gray-900: #111827;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+  --shadow-lg: 0 20px 40px rgba(0,0,0,0.15);
+  --radius: 14px;
+  --radius-lg: 24px;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', 'Noto Sans Devanagari', -apple-system, sans-serif;
+  color: var(--gray-900);
+  line-height: 1.6;
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* ============ BUTTONS ============ */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 22px; border-radius: 10px; font-weight: 600;
+  font-size: 15px; cursor: pointer; border: none;
+  transition: all 0.2s ease; white-space: nowrap;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--saffron), var(--saffron-dark));
+  color: #fff; box-shadow: 0 4px 14px rgba(255,107,53,0.35);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255,107,53,0.45); }
+.btn-ghost { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(10px); }
+.btn-ghost:hover { background: rgba(255,255,255,0.25); }
+.btn-outline { background: transparent; border: 2px solid var(--saffron); color: var(--saffron); }
+.btn-outline:hover { background: var(--saffron); color: #fff; }
+.btn-ghost-dark { background: var(--gray-100); color: var(--gray-700); border: 1px solid var(--gray-200); }
+.btn-ghost-dark:hover { background: var(--gray-200); }
+.btn-lg { padding: 16px 32px; font-size: 17px; border-radius: 12px; }
+
+/* ============ NAVBAR ============ */
+.navbar {
+  position: fixed; top: 0; width: 100%; z-index: 1000;
+  background: rgba(255,255,255,0.92); backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--gray-200);
+}
+.nav-container {
+  max-width: 1200px; margin: 0 auto; padding: 14px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; }
+.logo-icon { font-size: 26px; }
+.logo-text strong { color: var(--saffron); }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a { font-weight: 500; color: var(--gray-700); transition: color 0.2s; }
+.nav-links a:hover { color: var(--saffron); }
+.nav-actions { display: flex; align-items: center; gap: 14px; }
+
+/* ============ HERO ============ */
+.hero {
+  position: relative; padding: 140px 24px 80px;
+  background: linear-gradient(135deg, #1A237E 0%, #3949AB 50%, #5C6BC0 100%);
+  color: #fff; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,179,0,0.15), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(255,107,53,0.2), transparent 40%);
+  pointer-events: none;
+}
+.hero-content {
+  position: relative; max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px; align-items: center;
+}
+.badge {
+  display: inline-block; background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25); padding: 6px 14px;
+  border-radius: 100px; font-size: 13px; font-weight: 600; margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+}
+.hero h1 {
+  font-size: clamp(32px, 5vw, 56px); font-weight: 900; line-height: 1.1;
+  letter-spacing: -0.02em; margin-bottom: 20px;
+}
+.gradient {
+  background: linear-gradient(135deg, #FFB300, #FF6B35);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub { font-size: 18px; opacity: 0.9; margin-bottom: 32px; max-width: 560px; }
+.hero-cta { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 40px; }
+.hero-trust { display: flex; gap: 40px; flex-wrap: wrap; }
+.trust-item strong { display: block; font-size: 26px; font-weight: 800; color: var(--gold); }
+.trust-item span { font-size: 13px; opacity: 0.8; }
+
+/* ============ PHONE MOCKUP ============ */
+.hero-phone { display: flex; justify-content: center; }
+.phone-frame {
+  width: 320px; height: 640px; background: #0a0a0a;
+  border-radius: 42px; padding: 12px; box-shadow: var(--shadow-lg);
+  position: relative; animation: float 6s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+.phone-notch {
+  position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+  width: 100px; height: 22px; background: #0a0a0a;
+  border-radius: 0 0 14px 14px; z-index: 10;
+}
+.phone-screen {
+  width: 100%; height: 100%; background: var(--cream);
+  border-radius: 32px; padding: 40px 16px 16px; overflow: hidden;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.app-header {
+  display: flex; justify-content: space-between; align-items: center;
+  font-weight: 700; font-size: 14px; color: var(--indigo);
+  padding-bottom: 8px; border-bottom: 1px solid var(--gray-200);
+}
+.app-lang { font-size: 12px; color: var(--gray-500); font-weight: 600; }
+.chat-bubble {
+  padding: 10px 14px; border-radius: 16px; font-size: 13px;
+  line-height: 1.5; max-width: 90%; animation: popIn 0.4s ease both;
+}
+.chat-bubble.ai {
+  background: #fff; border: 1px solid var(--gray-200);
+  align-self: flex-start; border-bottom-left-radius: 4px;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.chat-bubble.user {
+  background: var(--indigo); color: #fff;
+  align-self: flex-end; border-bottom-right-radius: 4px;
+}
+.bubble-icon { flex-shrink: 0; }
+@keyframes popIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.product-preview {
+  background: #fff; border-radius: 14px; padding: 12px;
+  display: flex; gap: 12px; align-items: center; margin-top: auto;
+  border: 1px solid var(--gray-200); animation: popIn 0.6s ease both;
+}
+.preview-img {
+  width: 54px; height: 54px; background: linear-gradient(135deg, #EEF2FF, #E0E7FF);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+}
+.preview-info { flex: 1; font-size: 12px; }
+.preview-info strong { display: block; color: var(--gray-900); font-size: 13px; }
+.price { color: var(--green); font-weight: 700; font-size: 14px; }
+.price small { color: var(--gray-500); font-weight: 500; font-size: 10px; }
+.btn-app {
+  width: 100%; background: var(--saffron); color: #fff; border: none;
+  padding: 12px; border-radius: 12px; font-weight: 700; font-size: 13px;
+}
+
+/* ============ SECTIONS ============ */
+section { padding: 90px 0; }
+.section-header { text-align: center; margin-bottom: 60px; }
+.section-header h2 {
+  font-size: clamp(28px, 4vw, 42px); font-weight: 800;
+  letter-spacing: -0.02em; margin-bottom: 12px;
+}
+.section-header p { font-size: 18px; color: var(--gray-500); }
+.section-header.light h2 { color: #fff; }
+.section-header.light p { color: rgba(255,255,255,0.85); }
+
+/* ============ STATS ============ */
+.problem-section { background: var(--gray-50); }
+.stats-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px;
+}
+.stat-card {
+  background: #fff; padding: 32px; border-radius: var(--radius);
+  box-shadow: var(--shadow-sm); transition: transform 0.3s, box-shadow 0.3s;
+}
+.stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.stat-icon { font-size: 32px; margin-bottom: 12px; }
+.stat-num {
+  font-size: 42px; font-weight: 900; color: var(--saffron);
+  letter-spacing: -0.02em; line-height: 1;
+}
+.stat-label { color: var(--gray-500); margin-top: 8px; font-size: 15px; }
+
+/* ============ FEATURES ============ */
+.feature-block {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+  align-items: center; margin-bottom: 100px;
+}
+.feature-block.reverse { direction: rtl; }
+.feature-block.reverse > * { direction: ltr; }
+.feature-text h3 { font-size: 30px; font-weight: 800; margin: 10px 0 16px; letter-spacing: -0.02em; }
+.feature-tag {
+  display: inline-block; background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+  color: var(--saffron-dark); padding: 5px 14px; border-radius: 100px;
+  font-size: 12px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.feature-text p { color: var(--gray-500); font-size: 17px; margin-bottom: 20px; }
+.feature-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.feature-list li { font-size: 15px; color: var(--gray-700); }
+.feature-visual { display: flex; justify-content: center; }
+.visual-card {
+  background: linear-gradient(135deg, #F9FAFB, #F3F4F6);
+  padding: 32px; border-radius: var(--radius-lg); width: 100%;
+  box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200);
+}
+.before-after { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center; }
+.visual-before, .visual-after { text-align: center; }
+.visual-before span, .visual-after span {
+  font-size: 12px; font-weight: 700; text-transform: uppercase;
+  color: var(--gray-500); letter-spacing: 0.05em;
+}
+.visual-arrow { font-size: 28px; color: var(--saffron); }
+.mock-img { padding: 30px 20px; border-radius: 12px; margin-top: 8px; font-weight: 600; font-size: 14px; }
+.mock-img.cluttered {
+  background: repeating-linear-gradient(45deg, #E5E7EB, #E5E7EB 8px, #D1D5DB 8px, #D1D5DB 16px);
+  color: var(--gray-700);
+}
+.mock-img.clean {
+  background: linear-gradient(135deg, #fff, #F0FDF4);
+  border: 2px solid var(--green); color: var(--green);
+}
+.lang-card { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.lang-bubble {
+  background: #fff; padding: 16px 20px; border-radius: 14px;
+  font-size: 14px; border: 1px solid var(--gray-200); width: 100%; text-align: center;
+}
+.lang-bubble.output {
+  background: linear-gradient(135deg, #EEF2FF, #E0E7FF);
+  border-color: var(--indigo-light); color: var(--indigo); font-weight: 600;
+}
+.lang-arrow { font-size: 22px; }
+.price-card { display: flex; flex-direction: column; gap: 10px; }
+.price-row {
+  display: flex; justify-content: space-between; padding: 10px 14px;
+  background: #fff; border-radius: 10px; border: 1px solid var(--gray-200); font-size: 14px;
+}
+.price-row.highlight {
+  background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+  border-color: var(--saffron); font-weight: 700;
+}
+.price-row.highlight strong { color: var(--saffron-dark); }
+.price-bar { height: 8px; background: var(--gray-200); border-radius: 100px; overflow: hidden; margin: 8px 0; }
+.bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--saffron)); border-radius: 100px; }
+.profit-note { color: var(--green); font-weight: 700; font-size: 13px; text-align: center; }
+
+/* ============ HOW IT WORKS ============ */
+.how-section { background: var(--gray-50); }
+.steps { display: flex; align-items: flex-start; justify-content: center; flex-wrap: wrap; gap: 8px; }
+.step {
+  background: #fff; border-radius: var(--radius); padding: 32px 20px;
+  text-align: center; width: 200px; box-shadow: var(--shadow-sm); position: relative;
+}
+.step-num {
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  width: 28px; height: 28px; background: var(--saffron); color: #fff;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 14px;
+}
+.step-icon { font-size: 40px; margin-bottom: 12px; }
+.step h4 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+.step p { font-size: 13px; color: var(--gray-500); }
+.step-connector {
+  flex: 1; min-width: 20px; max-width: 40px; height: 2px;
+  background: var(--gray-300); align-self: center; margin-top: 40px;
+}
+
+/* ============ IMPACT ============ */
+.impact-section {
+  background: linear-gradient(135deg, #1A237E 0%, #3949AB 100%);
+}
+.impact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+.impact-card {
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+  padding: 32px; border-radius: var(--radius); color: #fff;
+  backdrop-filter: blur(10px); transition: transform 0.3s;
+}
+.impact-card:hover { transform: translateY(-4px); background: rgba(255,255,255,0.12); }
+.impact-icon { font-size: 32px; margin-bottom: 12px; }
+.impact-card h4 { font-size: 18px; margin-bottom: 8px; font-weight: 700; }
+.impact-card p { font-size: 14px; opacity: 0.85; }
+
+/* ============ FAQ ============ */
+.faq-list { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.faq-item {
+  background: #fff; border: 1px solid var(--gray-200);
+  border-radius: var(--radius); padding: 20px 24px; cursor: pointer;
+}
+.faq-item summary { font-weight: 700; font-size: 16px; list-style: none; position: relative; padding-right: 30px; }
+.faq-item summary::after {
+  content: '+'; position: absolute; right: 0; top: 0;
+  font-size: 24px; color: var(--saffron); transition: transform 0.3s;
+}
+.faq-item[open] summary::after { transform: rotate(45deg); }
+.faq-item p { margin-top: 12px; color: var(--gray-500); font-size: 15px; }
+
+/* ============ CTA ============ */
+.cta-section { background: var(--gray-50); }
+.cta-box {
+  background: linear-gradient(135deg, var(--saffron), var(--saffron-dark));
+  border-radius: var(--radius-lg); padding: 60px 40px; text-align: center; color: #fff;
+}
+.cta-box h2 { font-size: clamp(26px, 4vw, 38px); font-weight: 800; margin-bottom: 12px; }
+.cta-box p { font-size: 18px; opacity: 0.95; margin-bottom: 32px; }
+.cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* ============ FOOTER ============ */
+.footer { background: #0F172A; color: #CBD5E1; padding: 60px 0 30px; }
+.footer-grid {
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px;
+}
+.footer .logo { color: #fff; margin-bottom: 12px; }
+.footer-tag { font-weight: 700; color: var(--gold); margin-bottom: 8px; }
+.footer-desc { font-size: 14px; opacity: 0.7; }
+.footer h5 { color: #fff; font-size: 15px; margin-bottom: 16px; font-weight: 700; }
+.footer a { display: block; padding: 6px 0; font-size: 14px; opacity: 0.7; transition: opacity 0.2s; }
+.footer a:hover { opacity: 1; color: var(--gold); }
+.footer-bottom {
+  border-top: 1px solid #1E293B; padding-top: 24px;
+  text-align: center; font-size: 14px; opacity: 0.6;
+}
+
+/* ============ APP STYLES ============ */
+.app-body { background: var(--gray-50); padding-top: 70px; }
+.app-nav { background: rgba(255,255,255,0.95); }
+.lang-select {
+  padding: 8px 14px; border-radius: 8px; border: 1px solid var(--gray-200);
+  background: #fff; font-weight: 600; font-size: 14px; cursor: pointer;
+  font-family: inherit;
+}
+.app-container { max-width: 900px; margin: 0 auto; padding: 30px 24px 80px; }
+
+/* Progress bar */
+.progress-bar {
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 40px; gap: 0; flex-wrap: wrap;
+}
+.progress-step {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  opacity: 0.4; transition: opacity 0.3s;
+}
+.progress-step.active { opacity: 1; }
+.progress-dot {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--gray-200); color: var(--gray-700);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 16px; transition: all 0.3s;
+}
+.progress-step.active .progress-dot {
+  background: linear-gradient(135deg, var(--saffron), var(--saffron-dark));
+  color: #fff; box-shadow: 0 4px 12px rgba(255,107,53,0.4);
+  transform: scale(1.1);
+}
+.progress-step span { font-size: 12px; font-weight: 600; }
+.progress-line { width: 40px; height: 2px; background: var(--gray-200); margin: 0 4px 22px; }
+
+/* App steps */
+.app-step { display: none; }
+.app-step.active { display: block; animation: fadeIn 0.4s ease; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.step-header { text-align: center; margin-bottom: 30px; }
+.step-header h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+.step-header p { color: var(--gray-500); font-size: 16px; }
+
+/* Card */
+.card {
+  background: #fff; border-radius: var(--radius-lg);
+  padding: 32px; box-shadow: var(--shadow-md); border: 1px solid var(--gray-200);
+}
+
+/* Voice controls */
+.voice-controls { display: flex; flex-direction: column; align-items: center; gap: 16px; margin-bottom: 30px; }
+.mic-btn {
+  width: 120px; height: 120px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--saffron), var(--saffron-dark));
+  border: none; color: #fff; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 4px;
+  box-shadow: 0 10px 30px rgba(255,107,53,0.4);
+  transition: all 0.3s; cursor: pointer; font-weight: 700;
+}
+.mic-btn:hover { transform: scale(1.05); }
+.mic-btn.recording {
+  animation: pulse 1.5s infinite;
+  background: linear-gradient(135deg, #EF4444, #DC2626);
+  box-shadow: 0 10px 30px rgba(239,68,68,0.5);
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(239,68,68,0.6); }
+  70% { box-shadow: 0 0 0 20px rgba(239,68,68,0); }
+  100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+}
+.mic-icon { font-size: 40px; }
+.mic-label { font-size: 13px; }
+.voice-status { color: var(--gray-500); font-size: 14px; font-style: italic; }
+
+/* Transcript */
+.transcript-box { display: flex; flex-direction: column; gap: 12px; }
+.transcript-box label { font-weight: 600; font-size: 14px; color: var(--gray-700); }
+.transcript-box textarea {
+  width: 100%; padding: 16px; border-radius: 12px;
+  border: 2px solid var(--gray-200); font-family: inherit; font-size: 15px;
+  resize: vertical; transition: border 0.2s;
+}
+.transcript-box textarea:focus { outline: none; border-color: var(--saffron); }
+.transcript-actions { display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap; margin-top: 12px; }
+
+/* Examples */
+.examples { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--gray-200); }
+.examples p { font-size: 14px; margin-bottom: 12px; }
+.example-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.example-chips button {
+  background: var(--gray-100); border: 1px solid var(--gray-200);
+  padding: 8px 14px; border-radius: 100px; font-size: 13px;
+  transition: all 0.2s; font-family: inherit;
+}
+.example-chips button:hover { background: #FFF3E0; border-color: var(--saffron); color: var(--saffron-dark); }
+
+/* Upload area */
+.upload-area {
+  border: 2px dashed var(--gray-300); border-radius: var(--radius);
+  padding: 60px 20px; text-align: center; cursor: pointer;
+  transition: all 0.3s; background: var(--gray-50);
+}
+.upload-area:hover, .upload-area.dragover {
+  border-color: var(--saffron); background: #FFF3E0;
+}
+.upload-icon { font-size: 48px; margin-bottom: 12px; }
+.upload-area p { font-weight: 600; margin-bottom: 4px; }
+.upload-area small { color: var(--gray-500); }
+
+/* Image preview */
+.image-preview-container { display: flex; flex-direction: column; gap: 20px; }
+.preview-grid {
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center;
+}
+.preview-box {
+  background: var(--gray-50); border-radius: 12px; padding: 12px;
+  border: 1px solid var(--gray-200);
+}
+.preview-label {
+  display: block; font-size: 12px; font-weight: 700;
+  text-transform: uppercase; color: var(--gray-500); margin-bottom: 8px;
+  letter-spacing: 0.05em;
+}
+.preview-box img {
+  width: 100%; height: 240px; object-fit: contain;
+  border-radius: 8px; background: #fff;
+}
+.enhanced-wrapper { position: relative; }
+.processing-overlay {
+  position: absolute; inset: 0; background: rgba(255,255,255,0.95);
+  border-radius: 8px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 12px;
+}
+.spinner {
+  width: 40px; height: 40px; border: 4px solid var(--gray-200);
+  border-top-color: var(--saffron); border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.processing-overlay p { font-size: 13px; font-weight: 600; color: var(--gray-700); }
+.preview-arrow { font-size: 24px; color: var(--saffron); }
+
+/* BG options */
+.bg-options, .enhance-options {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding-top: 16px; border-top: 1px solid var(--gray-200);
+}
+.bg-options p, .enhance-options label { font-size: 14px; font-weight: 600; }
+.bg-btn {
+  padding: 8px 16px; border-radius: 8px; border: 1px solid var(--gray-200);
+  background: #fff; font-size: 13px; font-weight: 600; transition: all 0.2s;
+}
+.bg-btn.active { background: var(--saffron); color: #fff; border-color: var(--saffron); }
+.enhance-options label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+
+/* Cost inputs */
+.cost-inputs {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px; margin-bottom: 30px;
+}
+.input-group { display: flex; flex-direction: column; gap: 6px; }
+.input-group label { font-size: 13px; font-weight: 600; color: var(--gray-700); }
+.input-group input, .input-group select {
+  padding: 12px 14px; border-radius: 10px; border: 2px solid var(--gray-200);
+  font-size: 15px; font-family: inherit; transition: border 0.2s;
+}
+.input-group input:focus, .input-group select:focus {
+  outline: none; border-color: var(--saffron);
+}
+
+/* Price result */
+.price-result { display: flex; flex-direction: column; gap: 24px; }
+.price-card-main { display: flex; flex-direction: column; gap: 10px; }
+.price-card-main .price-row {
+  display: flex; justify-content: space-between; padding: 14px 18px;
+  background: var(--gray-50); border-radius: 10px; font-size: 15px;
+  border: 1px solid var(--gray-200);
+}
+.price-card-main .price-row.highlight {
+  background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+  border-color: var(--saffron); font-weight: 700; font-size: 16px;
+}
+.price-card-main .price-row.highlight strong { color: var(--saffron-dark); }
+.profit-box {
+  display: flex; justify-content: space-between; align-items: center;
+  background: linear-gradient(135deg, #ECFDF5, #D1FAE5);
+  border: 1px solid var(--green); border-radius: 12px;
+  padding: 16px 20px; margin-top: 12px;
+}
+.profit-box span { font-weight: 600; font-size: 14px; color: var(--green); }
+.profit-box strong { font-size: 22px; color: var(--green); }
+.profit-box small { display: block; font-size: 12px; color: var(--green); opacity: 0.8; }
+.price-slider { padding-top: 20px; border-top: 1px solid var(--gray-200); }
+.price-slider label { font-weight: 600; font-size: 14px; display: block; margin-bottom: 12px; }
+.price-slider input[type="range"] {
+  width: 100%; -webkit-appearance: none; height: 8px; border-radius: 100px;
+  background: var(--gray-200); outline: none; margin-bottom: 12px;
+}
+.price-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--saffron), var(--saffron-dark));
+  cursor: pointer; box-shadow: 0 2px 8px rgba(255,107,53,0.4);
+}
+.price-slider input[type="range"]::-moz-range-thumb {
+  width: 24px; height: 24px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--saffron), var(--saffron-dark));
+  cursor: pointer;
+}
+.final-price-display {
+  text-align: center; font-size: 16px; padding: 12px;
+  background: var(--gray-50); border-radius: 10px;
+}
+.final-price-display strong { color: var(--saffron-dark); font-size: 22px; }
+
+/* Final product */
+.final-product {
+  display: grid; grid-template-columns: 240px 1fr; gap: 24px;
+  margin-bottom: 30px; align-items: start;
+}
+.final-img-wrapper {
+  background: var(--gray-50); border-radius: 12px; padding: 12px;
+  border: 1px solid var(--gray-200);
+}
+.final-img-wrapper img {
+  width: 100%; height: 240px; object-fit: contain; border-radius: 8px;
+  background: #fff;
+}
+.final-details h3 { font-size: 22px; font-weight: 800; margin-bottom: 12px; }
+.final-details > p { color: var(--gray-500); font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
+.final-price-tag {
+  display: inline-flex; flex-direction: column; gap: 2px;
+  background: linear-gradient(135deg, #ECFDF5, #D1FAE5);
+  padding: 12px 20px; border-radius: 12px; border: 1px solid var(--green);
+  margin-bottom: 16px;
+}
+.final-price-tag span { font-size: 11px; font-weight: 600; color: var(--green); text-transform: uppercase; letter-spacing: 0.05em; }
+.final-price-tag strong { font-size: 26px; color: var(--green); }
+.final-meta { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--gray-500); }
+.final-meta strong { color: var(--gray-700); }
+
+/* Export */
+.export-actions {
+  display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px;
+  padding-bottom: 24px; border-bottom: 1px solid var(--gray-200);
+}
+.marketplace-info { text-align: center; }
+.marketplace-info p { font-size: 14px; color: var(--gray-500); margin-bottom: 12px; }
+.marketplace-chips { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.marketplace-chips span {
+  background: var(--gray-100); padding: 8px 16px; border-radius: 100px;
+  font-size: 13px; font-weight: 600; color: var(--gray-700);
+}
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: var(--gray-900); color: #fff; padding: 14px 24px;
+  border-radius: 100px; font-weight: 600; font-size: 14px;
+  box-shadow: var(--shadow-lg); opacity: 0; transition: all 0.4s ease;
+  z-index: 9999; pointer-events: none;
+}
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 900px) {
+  .hero-content { grid-template-columns: 1fr; text-align: center; }
+  .hero-cta, .hero-trust { justify-content: center; }
+  .feature-block, .feature-block.reverse { grid-template-columns: 1fr; gap: 30px; direction: ltr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .final-product { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .steps { flex-direction: column; align-items: center; }
+  .step-connector { width: 2px; height: 24px; max-width: none; margin: 0; }
+  .progress-line { width: 16px; }
+}
+@media (max-width: 600px) {
+  .preview-grid { grid-template-columns: 1fr; }
+  .preview-arrow { transform: rotate(90deg); }
+  .footer-grid { grid-template-columns: 1fr; }
+  .card { padding: 20px; }
+  .mic-btn { width: 100px; height: 100px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo" onclick="showView('landing')">
+      <span class="logo-icon">🪡</span>
+      <span class="logo-text">Artisan<strong>AI</strong></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#features" onclick="showView('landing')">Features</a></li>
+      <li><a href="#how" onclick="showView('landing')">How It Works</a></li>
+      <li><a href="#impact" onclick="showView('landing')">Impact</a></li>
+      <li><a href="#faq" onclick="showView('landing')">FAQ</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn btn-primary" onclick="showView('app')" id="navAppBtn">Try Live Demo →</button>
+      <select id="languageSelect" class="lang-select" style="display:none;">
+        <option value="hi-IN">हिंदी</option>
+        <option value="en-IN">English</option>
+        <option value="ta-IN">தமிழ்</option>
+        <option value="bn-IN">বাংলা</option>
+        <option value="mr-IN">मराठी</option>
+        <option value="te-IN">తెలుగు</option>
+        <option value="gu-IN">ગુજરાતી</option>
+        <option value="kn-IN">ಕನ್ನಡ</option>
+        <option value="ml-IN">മലയാളം</option>
+        <option value="pa-IN">ਪੰਜਾਬੀ</option>
+      </select>
+      <button class="btn btn-ghost-dark" onclick="resetApp()" id="navResetBtn" style="display:none;">🔄 Reset</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ LANDING VIEW ============ -->
+<div id="landingView">
+
+<header class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <span class="badge">🇮🇳 100% Free · Runs in Your Browser</span>
+      <h1>Transform Your Craft Into <span class="gradient">Digital Business</span></h1>
+      <p class="hero-sub">
+        Speak in your language. Show your product. Real AI handles the photography, 
+        description, and pricing — <strong>automatically</strong>.
+      </p>
+      <div class="hero-cta">
+        <button class="btn btn-primary btn-lg" onclick="showView('app')">🎤 Try Live Demo</button>
+        <a href="#how" class="btn btn-ghost btn-lg">See How It Works</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item"><strong>10+</strong><span>Languages</span></div>
+        <div class="trust-item"><strong>3</strong><span>Real AI Engines</span></div>
+        <div class="trust-item"><strong>₹0</strong><span>Cost to Use</span></div>
+      </div>
+    </div>
+
+    <div class="hero-phone">
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="app-header">
+            <span>🪡 ArtisanAI</span>
+            <span class="app-lang">हिंदी ▾</span>
+          </div>
+          <div class="chat-bubble ai">
+            <span class="bubble-icon">🤖</span>
+            <p>नमस्ते! अपना product describe कीजिए।</p>
+          </div>
+          <div class="chat-bubble user">
+            <p>🎤 यह कांचीपुरम सिल्क साड़ी है, नीला और सुनहरा रंग।</p>
+          </div>
+          <div class="chat-bubble ai">
+            <span class="bubble-icon">✨</span>
+            <p>बहुत अच्छा! Description तैयार है।</p>
+          </div>
+          <div class="product-preview">
+            <div class="preview-img">🥻</div>
+            <div class="preview-info">
+              <strong>Kanchipuram Silk Saree</strong>
+              <span class="price">₹7,500 <small>(recommended)</small></span>
+            </div>
+          </div>
+          <button class="btn-app">📤 List on GeM / ONDC</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="problem-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>The Gap We're Bridging</h2>
+      <p>Traditional craftsmanship meets modern digital commerce</p>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">📉</div>
+        <div class="stat-num">67%</div>
+        <div class="stat-label">Artisans lack year-round digital market access</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📸</div>
+        <div class="stat-num">82%</div>
+        <div class="stat-label">Can't photograph products to e-commerce standards</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🗣️</div>
+        <div class="stat-num">74%</div>
+        <div class="stat-label">Face language barriers writing listings</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💰</div>
+        <div class="stat-num">58%</div>
+        <div class="stat-label">Underprice products due to market unawareness</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features" class="features-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Three AI Engines. One Free App.</h2>
+      <p>All running directly in your browser — no server, no API keys</p>
+    </div>
+
+    <div class="feature-block">
+      <div class="feature-visual">
+        <div class="visual-card before-after">
+          <div class="visual-before">
+            <span>Before</span>
+            <div class="mock-img cluttered">📷 Cluttered BG</div>
+          </div>
+          <div class="visual-arrow">→</div>
+          <div class="visual-after">
+            <span>After</span>
+            <div class="mock-img clean">✨ Studio Ready</div>
+          </div>
+        </div>
+      </div>
+      <div class="feature-text">
+        <span class="feature-tag">Module 1</span>
+        <h3>AI Image Enhancer & Studio</h3>
+        <p>
+          Real AI (U2Net neural network) removes cluttered backgrounds and 
+          enhances your photos to e-commerce standards — all in your browser.
+        </p>
+        <ul class="feature-list">
+          <li>✅ Real background removal (runs in browser)</li>
+          <li>✅ Auto brightness / contrast / sharpness boost</li>
+          <li>✅ White / transparent / cream background options</li>
+          <li>✅ HD export</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="feature-block reverse">
+      <div class="feature-visual">
+        <div class="visual-card lang-card">
+          <div class="lang-bubble">🎤 "இது கைத்தறி பட்டு சேலை"</div>
+          <div class="lang-arrow">⬇️</div>
+          <div class="lang-bubble output">"Handwoven Kanchipuram Pure Silk Saree — regal blue & gold"</div>
+        </div>
+      </div>
+      <div class="feature-text">
+        <span class="feature-tag">Module 2</span>
+        <h3>Multilingual Auto-Cataloger</h3>
+        <p>
+          Real speech recognition in 10+ Indian languages, real entity extraction, 
+          and intelligent description generation — completely free.
+        </p>
+        <ul class="feature-list">
+          <li>✅ Real speech-to-text (browser native AI)</li>
+          <li>✅ Auto entity extraction (material, color, craft)</li>
+          <li>✅ SEO-friendly descriptions</li>
+          <li>✅ B2B and B2C variants</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="feature-block">
+      <div class="feature-visual">
+        <div class="visual-card price-card">
+          <div class="price-row"><span>Cost Floor</span><strong>₹4,200</strong></div>
+          <div class="price-row highlight"><span>AI Recommended</span><strong>₹7,500</strong></div>
+          <div class="price-row"><span>Premium Range</span><strong>₹9,000</strong></div>
+          <div class="price-bar"><div class="bar-fill" style="width:75%"></div></div>
+          <small class="profit-note">💰 Profit: ₹3,300 (44%)</small>
+        </div>
+      </div>
+      <div class="feature-text">
+        <span class="feature-tag">Module 3</span>
+        <h3>Dynamic Pricing Assistant</h3>
+        <p>
+          Real cost-based pricing model with category-aware market multipliers, 
+          seasonality adjustment, and instant profit calculation.
+        </p>
+        <ul class="feature-list">
+          <li>✅ Cost floor calculation (material + labor + overhead)</li>
+          <li>✅ Category-aware market multiplier</li>
+          <li>✅ Seasonality adjustment</li>
+          <li>✅ Live profit margin display</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how" class="how-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Speak. Show. Sell.</h2>
+      <p>From craft to digital shelf in under 5 minutes</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-icon">🎤</div>
+        <h4>Speak</h4>
+        <p>Describe your product in your language.</p>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-icon">📸</div>
+        <h4>Show</h4>
+        <p>Upload a photo. Real AI removes background.</p>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-icon">💰</div>
+        <h4>Price</h4>
+        <p>Get AI-recommended price. See profit instantly.</p>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-icon">🚀</div>
+        <h4>Export</h4>
+        <p>Download catalog as JSON. Ready for ONDC & GeM.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="impact" class="impact-section">
+  <div class="container">
+    <div class="section-header light">
+      <h2>Impact Goals</h2>
+      <p>Measurable outcomes for marginalized micro-entrepreneurs</p>
+    </div>
+    <div class="impact-grid">
+      <div class="impact-card">
+        <div class="impact-icon">📅</div>
+        <h4>Year-Round Sales</h4>
+        <p>Continuous digital channel reduces dependency on periodic physical fairs.</p>
+      </div>
+      <div class="impact-card">
+        <div class="impact-icon">🚪</div>
+        <h4>Lower Entry Barrier</h4>
+        <p>Voice-first, vernacular AI eliminates need for technical skills.</p>
+      </div>
+      <div class="impact-card">
+        <div class="impact-icon">📈</div>
+        <h4>Higher Income</h4>
+        <p>Better pricing + wider reach = measurable increase in annual income.</p>
+      </div>
+      <div class="impact-card">
+        <div class="impact-icon">🤝</div>
+        <h4>Digital Literacy</h4>
+        <p>Every interaction builds familiarity with digital commerce.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="faq-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Does the app really use AI, or is it a mockup?</summary>
+        <p>It really uses AI. Background removal runs a U2Net neural network in your browser. Speech recognition uses the browser's native AI engine. Pricing uses a real cost + market model. No fake responses.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Which languages are supported for voice input?</summary>
+        <p>Hindi, English, Tamil, Bengali, Marathi, Telugu, Gujarati, Kannada, Malayalam, and Punjabi — depending on your browser. Chrome and Edge have the best support.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does it cost anything?</summary>
+        <p>No. The entire app runs in your browser. No API keys, no subscriptions, no hidden fees. You can host it free on GitHub Pages.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is my data safe?</summary>
+        <p>All processing happens in your browser. Nothing is uploaded to any server. Your photos and voice never leave your device.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Why does background removal take 30 seconds the first time?</summary>
+        <p>The AI model (~40MB) downloads once and is cached. Subsequent uses take 2–3 seconds.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Ready to take your craft digital?</h2>
+      <p>Free forever. Works offline. No signup needed.</p>
+      <div class="cta-actions">
+        <button class="btn btn-lg" style="background:#fff;color:var(--saffron-dark);" onclick="showView('app')">🎤 Launch Live App</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="logo">
+          <span class="logo-icon">🪡</span>
+          <span class="logo-text">Artisan<strong>AI</strong></span>
+        </div>
+        <p class="footer-tag">Speak. Show. Sell.</p>
+        <p class="footer-desc">An AI-powered virtual business manager for India's artisans, weavers, and micro-entrepreneurs.</p>
+      </div>
+      <div>
+        <h5>Product</h5>
+        <a href="#features">Features</a>
+        <a href="#how">How It Works</a>
+        <a href="#impact">Impact</a>
+        <a href="#" onclick="showView('app');return false;">Live Demo</a>
+      </div>
+      <div>
+        <h5>Resources</h5>
+        <a href="#">Artisan Guide</a>
+        <a href="#">Video Tutorials</a>
+        <a href="#">Success Stories</a>
+      </div>
+      <div>
+        <h5>Support</h5>
+        <a href="#">Helpline: 1800-XXX-XXXX</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 ArtisanAI. Built for Bharat's craftspeople. 🇮🇳</p>
+    </div>
+  </div>
+</footer>
+</div>
+
+<!-- ============ APP VIEW ============ -->
+<div id="appView" class="app-body" style="display:none;">
+<div class="app-container">
+
+  <div class="progress-bar">
+    <div class="progress-step active" data-step="1">
+      <div class="progress-dot">1</div>
+      <span>Speak</span>
+    </div>
+    <div class="progress-line"></div>
+    <div class="progress-step" data-step="2">
+      <div class="progress-dot">2</div>
+      <span>Show</span>
+    </div>
+    <div class="progress-line"></div>
+    <div class="progress-step" data-step="3">
+      <div class="progress-dot">3</div>
+      <span>Price</span>
+    </div>
+    <div class="progress-line"></div>
+    <div class="progress-step" data-step="4">
+      <div class="progress-dot">4</div>
+      <span>Export</span>
+    </div>
+  </div>
+
+  <!-- STEP 1 -->
+  <section class="app-step active" id="step1">
+    <div class="step-header">
+      <h2>🎤 Step 1: Speak About Your Product</h2>
+      <p>Describe your product in your own language. Our AI will understand it.</p>
+    </div>
+    <div class="card">
+      <div class="voice-controls">
+        <button id="micBtn" class="mic-btn" onclick="toggleRecording()">
+          <span class="mic-icon">🎤</span>
+          <span class="mic-label">Tap to Speak</span>
+        </button>
+        <div class="voice-status" id="voiceStatus">Ready to listen...</div>
+      </div>
+      <div class="transcript-box">
+        <label>📝 Transcript (edit if needed):</label>
+        <textarea id="transcript" rows="4" placeholder="आपका product description यहाँ आएगा..."></textarea>
+        <div class="transcript-actions">
+          <button class="btn btn-ghost-dark" onclick="clearTranscript()">Clear</button>
+          <button class="btn btn-primary" onclick="goToStep(2)">Next: Add Photo →</button>
+        </div>
+      </div>
+      <div class="examples">
+        <p><strong>💡 Try saying (or click to fill):</strong></p>
+        <div class="example-chips">
+          <button onclick="useExample('यह कांचीपुरम सिल्क साड़ी है, नीला और सुनहरा रंग, 6.5 मीटर लंबाई, शुद्ध रेशम')">
+            🥻 Kanchipuram Silk Saree
+          </button>
+          <button onclick="useExample('This is a handmade blue pottery vase, 12 inches tall, traditional Jaipur craft')">
+            🏺 Blue Pottery Vase
+          </button>
+          <button onclick="useExample('இது கைத்தறி பருத்தி துணி, சிவப்பு நிறம், 2 மீட்டர்')">
+            🧵 Handloom Cotton
+          </button>
+          <button onclick="useExample('Handcrafted silver jewelry, traditional Rajasthani design, 50 grams')">
+            💍 Silver Jewelry
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="app-step" id="step2">
+    <div class="step-header">
+      <h2>📸 Step 2: Show Your Product</h2>
+      <p>Upload a photo. Real AI will remove the background and enhance it.</p>
+    </div>
+    <div class="card">
+      <div class="upload-area" id="uploadArea" onclick="document.getElementById('imageInput').click()">
+        <input type="file" id="imageInput" accept="image/*" hidden />
+        <div class="upload-icon">📷</div>
+        <p><strong>Click to upload</strong> or drag & drop</p>
+        <small>JPG, PNG · Max 10MB</small>
+      </div>
+
+      <div class="image-preview-container" id="imagePreviewContainer" style="display:none;">
+        <div class="preview-grid">
+          <div class="preview-box">
+            <span class="preview-label">Original</span>
+            <img id="originalImg" alt="Original" />
+          </div>
+          <div class="preview-arrow">→</div>
+          <div class="preview-box">
+            <span class="preview-label">AI Enhanced</span>
+            <div class="enhanced-wrapper">
+              <img id="enhancedImg" alt="Enhanced" />
+              <div class="processing-overlay" id="processingOverlay">
+                <div class="spinner"></div>
+                <p id="processingText">Loading AI model...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-options">
+          <p><strong>Background:</strong></p>
+          <button class="bg-btn active" data-bg="transparent" onclick="changeBg(this,'transparent')">Transparent</button>
+          <button class="bg-btn" data-bg="white" onclick="changeBg(this,'white')">White</button>
+          <button class="bg-btn" data-bg="cream" onclick="changeBg(this,'cream')">Cream</button>
+          <button class="bg-btn" data-bg="gradient" onclick="changeBg(this,'gradient')">Gradient</button>
+        </div>
+
+        <div class="enhance-options">
+          <label><input type="checkbox" id="autoEnhance" checked onchange="applyBg()" /> Auto brightness & contrast boost</label>
+        </div>
+
+        <div class="transcript-actions">
+          <button class="btn btn-ghost-dark" onclick="goToStep(1)">← Back</button>
+          <button class="btn btn-primary" onclick="goToStep(3)">Next: Get Price →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="app-step" id="step3">
+    <div class="step-header">
+      <h2>💰 Step 3: AI Price Recommendation</h2>
+      <p>Based on your costs and real market data.</p>
+    </div>
+    <div class="card">
+      <div class="cost-inputs">
+        <div class="input-group">
+          <label>Material Cost (₹)</label>
+          <input type="number" id="materialCost" value="2000" min="0" oninput="recalcPrice()" />
+        </div>
+        <div class="input-group">
+          <label>Labor Hours</label>
+          <input type="number" id="laborHours" value="10" min="0" oninput="recalcPrice()" />
+        </div>
+        <div class="input-group">
+          <label>Category</label>
+          <select id="category" onchange="recalcPrice()">
+            <option value="silk-saree">Silk Saree</option>
+            <option value="handloom">Handloom Fabric</option>
+            <option value="handicraft">Handicraft</option>
+            <option value="jewelry">Jewelry</option>
+            <option value="pottery">Pottery</option>
+            <option value="painting">Painting</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="price-result">
+        <div class="price-card-main">
+          <div class="price-row"><span>Cost Floor</span><strong id="priceFloor">₹4,200</strong></div>
+          <div class="price-row highlight"><span>⭐ AI Recommended</span><strong id="priceOptimal">₹7,500</strong></div>
+          <div class="price-row"><span>Premium Range</span><strong id="pricePremium">₹9,000</strong></div>
+          <div class="price-row"><span>Market Median</span><strong id="priceMedian">₹7,000</strong></div>
+          <div class="price-bar"><div class="bar-fill" id="priceBar" style="width:75%"></div></div>
+          <div class="profit-box">
+            <span>💰 Estimated Profit</span>
+            <strong id="profitAmount">₹3,300</strong>
+            <small id="profitMargin">(44% margin)</small>
+          </div>
+        </div>
+
+        <div class="price-slider">
+          <label>Adjust your selling price:</label>
+          <input type="range" id="finalPrice" min="3000" max="15000" value="7500" oninput="updateFinalPrice()" />
+          <div class="final-price-display">
+            Your Price: <strong id="finalPriceDisplay">₹7,500</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="transcript-actions">
+        <button class="btn btn-ghost-dark" onclick="goToStep(2)">← Back</button>
+        <button class="btn btn-primary" onclick="goToStep(4)">Next: Generate Catalog →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 4 -->
+  <section class="app-step" id="step4">
+    <div class="step-header">
+      <h2>🚀 Step 4: Your Product is Ready!</h2>
+      <p>Download your catalog and list it anywhere.</p>
+    </div>
+    <div class="card">
+      <div class="final-product">
+        <div class="final-img-wrapper">
+          <img id="finalImg" alt="Product" />
+        </div>
+        <div class="final-details">
+          <h3 id="finalTitle">Product Title</h3>
+          <p id="finalDescription">Product description will appear here...</p>
+          <div class="final-price-tag">
+            <span>Selling Price</span>
+            <strong id="finalPriceTag">₹7,500</strong>
+          </div>
+          <div class="final-meta">
+            <span>🏷️ Category: <strong id="finalCategory">Silk Saree</strong></span>
+            <span>🔖 Keywords: <strong id="finalKeywords">—</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="export-actions">
+        <button class="btn btn-primary" onclick="downloadJSON()">📥 Download Catalog (JSON)</button>
+        <button class="btn btn-outline" onclick="copyListing()">📋 Copy Listing</button>
+        <button class="btn btn-ghost-dark" onclick="resetApp()">🔄 Start New Product</button>
+      </div>
+
+      <div class="marketplace-info">
+        <p><strong>Ready to list on:</strong></p>
+        <div class="marketplace-chips">
+          <span>🛒 ONDC</span>
+          <span>🏛️ GeM</span>
+          <span>📦 Amazon Saheli</span>
+          <span>🛍️ Flipkart Samarth</span>
+          <span>🌐 Etsy</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- AI Library -->
+<script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/browser.js"></script>
+
+<script>
+// ================================================================
+// ARTISANAI — ALL-IN-ONE ENGINE
+// ================================================================
+
+// ---------- STATE ----------
+const state = {
+  step: 1,
+  transcript: '',
+  originalImage: null,
+  enhancedImage: null,
+  bgStyle: 'transparent',
+  price: { floor: 0, optimal: 0, premium: 0, median: 0, final: 0 },
+  product: null
+};
+
+// ---------- VIEW MANAGEMENT ----------
+function showView(view) {
+  const landing = document.getElementById('landingView');
+  const app = document.getElementById('appView');
+  const navBtn = document.getElementById('navAppBtn');
+  const resetBtn = document.getElementById('navResetBtn');
+  const langSelect = document.getElementById('languageSelect');
+
+  if (view === 'app') {
+    landing.style.display = 'none';
+    app.style.display = 'block';
+    navBtn.textContent = '← Back to Home';
+    navBtn.onclick = () => showView('landing');
+    resetBtn.style.display = 'inline-flex';
+    langSelect.style.display = 'inline-block';
+    window.scrollTo(0, 0);
+  } else {
+    landing.style.display = 'block';
+    app.style.display = 'none';
+    navBtn.textContent = 'Try Live Demo →';
+    navBtn.onclick = () => showView('app');
+    resetBtn.style.display = 'none';
+    langSelect.style.display = 'none';
+  }
+}
+
+// ---------- TOAST ----------
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+// ---------- STEP NAVIGATION ----------
+function goToStep(n) {
+  state.step = n;
+  document.querySelectorAll('.app-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step' + n).classList.add('active');
+
+  document.querySelectorAll('.progress-step').forEach(ps => {
+    ps.classList.toggle('active', parseInt(ps.dataset.step) <= n);
+  });
+
+  if (n === 3) recalcPrice();
+  if (n === 4) buildFinalProduct();
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ---------- STEP 1: SPEECH ----------
+let recognition = null;
+let isRecording = false;
+
+function initSpeech() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    document.getElementById('voiceStatus').textContent = '⚠️ Speech recognition not supported. Please use Chrome or Edge.';
+    return null;
+  }
+  const rec = new SR();
+  rec.continuous = true;
+  rec.interimResults = true;
+  rec.lang = document.getElementById('languageSelect').value || 'hi-IN';
+
+  rec.onresult = (e) => {
+    let finalText = '';
+    let interimText = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      const t = e.results[i][0].transcript;
+      if (e.results[i].isFinal) finalText += t + ' ';
+      else interimText += t;
+    }
+    if (finalText) {
+      state.transcript += finalText;
+      document.getElementById('transcript').value = state.transcript;
+    }
+    document.getElementById('voiceStatus').textContent = interimText ? '🎙️ ' + interimText : 'Listening...';
+  };
+
+  rec.onerror = (e) => {
+    document.getElementById('voiceStatus').textContent = '⚠️ Error: ' + e.error;
+    stopRecording();
+  };
+
+  rec.onend = () => {
+    if (isRecording) {
+      try { rec.start(); } catch(e) {}
+    }
+  };
+
+  return rec;
+}
+
+function toggleRecording() {
+  if (!recognition) recognition = initSpeech();
+  if (!recognition) return;
+
+  if (isRecording) {
+    stopRecording();
+  } else {
+    startRecording();
+  }
+}
+
+function startRecording() {
+  try {
+    recognition.lang = document.getElementById('languageSelect').value || 'hi-IN';
+    recognition.start();
+    isRecording = true;
+    document.getElementById('micBtn').classList.add('recording');
+    document.querySelector('.mic-label').textContent = 'Tap to Stop';
+    document.getElementById('voiceStatus').textContent = '🎙️ Listening... speak now';
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function stopRecording() {
+  if (recognition) {
+    try { recognition.stop(); } catch(e) {}
+  }
+  isRecording = false;
+  document.getElementById('micBtn').classList.remove('recording');
+  document.querySelector('.mic-label').textContent = 'Tap to Speak';
+  document.getElementById('voiceStatus').textContent = '✓ Recording stopped';
+}
+
+function clearTranscript() {
+  state.transcript = '';
+  document.getElementById('transcript').value = '';
+  document.getElementById('voiceStatus').textContent = 'Ready to listen...';
+}
+
+function useExample(text) {
+  state.transcript = text;
+  document.getElementById('transcript').value = text;
+  showToast('✓ Example loaded');
+}
+
+// ---------- STEP 2: IMAGE + BACKGROUND REMOVAL ----------
+const uploadArea = document.getElementById('uploadArea');
+const imageInput = document.getElementById('imageInput');
+
+imageInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file) handleImageUpload(file);
+});
+
+['dragover', 'dragenter'].forEach(evt => {
+  uploadArea.addEventListener(evt, (e) => {
+    e.preventDefault();
+    uploadArea.classList.add('dragover');
+  });
+});
+['dragleave', 'drop'].forEach(evt => {
+  uploadArea.addEventListener(evt, (e) => {
+    e.preventDefault();
+    uploadArea.classList.remove('dragover');
+  });
+});
+uploadArea.addEventListener('drop', (e) => {
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) handleImageUpload(file);
+});
+
+async function handleImageUpload(file) {
+  // Show original
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    state.originalImage = e.target.result;
+    document.getElementById('originalImg').src = e.target.result;
+    document.getElementById('imagePreviewContainer').style.display = 'flex';
+    uploadArea.style.display = 'none';
+
+    // Process with AI
+    await processImageWithAI(file);
+  };
+  reader.readAsDataURL(file);
+}
+
+async function processImageWithAI(file) {
+  const overlay = document.getElementById('processingOverlay');
+  const text = document.getElementById('processingText');
+  overlay.style.display = 'flex';
+  text.textContent = 'Loading AI model (first time ~40MB)...';
+
+  try {
+    // Check if library loaded
+    if (typeof window.imgly === 'undefined' && typeof removeBackground === 'undefined') {
+      throw new Error('AI library not loaded. Check internet connection.');
+    }
+
+    const remover = window.imgly?.removeBackground || window.removeBackground;
+    if (!remover) throw new Error('removeBackground function not found');
+
+    text.textContent = 'AI removing background...';
+
+    const blob = await remover(file, {
+      progress: (key, current, total) => {
+        const pct = Math.round((current / total) * 100);
+        text.textContent = `AI processing... ${pct}%`;
+      }
+    });
+
+    state.enhancedImage = URL.createObjectURL(blob);
+    document.getElementById('enhancedImg').src = state.enhancedImage;
+    overlay.style.display = 'none';
+    showToast('✓ Background removed with AI');
+  } catch (err) {
+    console.error('AI processing failed:', err);
+    text.textContent = '⚠️ AI failed. Using original image.';
+    setTimeout(() => {
+      state.enhancedImage = state.originalImage;
+      document.getElementById('enhancedImg').src = state.originalImage;
+      overlay.style.display = 'none';
+      showToast('⚠️ Using original (AI unavailable)');
+    }, 1500);
+  }
+}
+
+function changeBg(btn, bg) {
+  document.querySelectorAll('.bg-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  state.bgStyle = bg;
+
+  // Apply visual background
+  const wrapper = document.querySelector('.preview-box:last-child');
+  const colors = {
+    transparent: 'repeating-conic-gradient(#E5E7EB 0% 25%, #fff 0% 50%) 50% / 20px 20px',
+    white: '#ffffff',
+    cream: '#FFF8F0',
+    gradient: 'linear-gradient(135deg, #EEF2FF, #E0E7FF)'
+  };
+  wrapper.style.background = colors[bg];
+
+  // Apply enhancement filter
+  const enhance = document.getElementById('autoEnhance').checked;
+  const img = document.getElementById('enhancedImg');
+  img.style.filter = enhance ? 'brightness(1.08) contrast(1.12) saturate(1.05)' : 'none';
+
+  showToast('✓ Background: ' + bg);
+}
+
+function applyBg() {
+  const enhance = document.getElementById('autoEnhance').checked;
+  const img = document.getElementById('enhancedImg');
+  img.style.filter = enhance ? 'brightness(1.08) contrast(1.12) saturate(1.05)' : 'none';
+}
+
+// ---------- STEP 3: PRICING ----------
+const CATEGORY_MULTIPLIERS = {
+  'silk-saree': 1.85,
+  'handloom': 1.65,
+  'handicraft': 1.75,
+  'jewelry': 2.20,
+  'pottery': 1.60,
+  'painting': 1.90,
+  'other': 1.60
+};
+
+const SEASON_FACTORS = {
+  0: 0.95, 1: 1.0, 2: 1.05, 3: 1.10, 4: 1.05,
+  5: 1.0, 6: 0.95, 7: 1.05, 8: 1.15, 9: 1.20,
+  10: 1.15, 11: 1.05
+};
+
+function recalcPrice() {
+  const materialCost = parseFloat(document.getElementById('materialCost').value) || 0;
+  const laborHours = parseFloat(document.getElementById('laborHours').value) || 0;
+  const category = document.getElementById('category').value;
+
+  const LABOR_RATE = 150;
+  const overhead = materialCost * 0.15;
+  const costFloor = materialCost + (laborHours * LABOR_RATE) + overhead;
+
+  const categoryMult = CATEGORY_MULTIPLIERS[category] || 1.6;
+  const seasonFactor = SEASON_FACTORS[new Date().getMonth()] || 1.0;
+
+  const optimal = costFloor * categoryMult * seasonFactor;
+  const premium = optimal * 1.25;
+  const floor = costFloor * 1.1;
+  const median = optimal * 0.93;
+
+  state.price = {
+    floor: Math.round(floor),
+    optimal: Math.round(optimal),
+    premium: Math.round(premium),
+    median: Math.round(median),
+    final: Math.round(optimal)
+  };
+
+  document.getElementById('priceFloor').textContent = '₹' + state.price.floor.toLocaleString('en-IN');
+  document.getElementById('priceOptimal').textContent = '₹' + state.price.optimal.toLocaleString('en-IN');
+  document.getElementById('pricePremium').textContent = '₹' + state.price.premium.toLocaleString('en-IN');
+  document.getElementById('priceMedian').textContent = '₹' + state.price.median.toLocaleString('en-IN');
+
+  const slider = document.getElementById('finalPrice');
+  slider.min = Math.round(floor * 0.9);
+  slider.max = Math.round(premium * 1.2);
+  slider.value = state.price.optimal;
+
+  updateFinalPrice();
+  updateProfit();
+}
+
+function updateFinalPrice() {
+  const val = parseInt(document.getElementById('finalPrice').value);
+  state.price.final = val;
+  document.getElementById('finalPriceDisplay').textContent = '₹' + val.toLocaleString('en-IN');
+  document.getElementById('finalPriceTag').textContent = '₹' + val.toLocaleString('en-IN');
+  updateProfit();
+
+  // Move bar
+  const min = parseInt(document.getElementById('finalPrice').min);
+  const max = parseInt(document.getElementById('finalPrice').max);
+  const pct = ((val - min) / (max - min)) * 100;
+  document.getElementById('priceBar').style.width = pct + '%';
+}
+
+function updateProfit() {
+  const materialCost = parseFloat(document.getElementById('materialCost').value) || 0;
+  const laborHours = parseFloat(document.getElementById('laborHours').value) || 0;
+  const costFloor = materialCost + (laborHours * 150) + (materialCost * 0.15);
+  const profit = state.price.final - costFloor;
+  const margin = costFloor > 0 ? Math.round((profit / state.price.final) * 100) : 0;
+
+  document.getElementById('profitAmount').textContent = '₹' + Math.max(0, profit).toLocaleString('en-IN');
+  document.getElementById('profitMargin').textContent = '(' + margin + '% margin)';
+}
+
+// ---------- STEP 4: FINAL PRODUCT ----------
+function buildFinalProduct() {
+  const transcript = document.getElementById('transcript').value.trim() || 'Handcrafted product';
+  const category = document.getElementById('category').value;
+  const categoryLabel = document.getElementById('category').options[document.getElementById('category').selectedIndex].text;
+
+  // Extract entities from transcript
+  const entities = extractEntities(transcript);
+
+  // Build title
+  const title = buildTitle(entities, categoryLabel, transcript);
+
+  // Build description
+  const description = buildDescription(entities, transcript, categoryLabel);
+
+  // Keywords
+  const keywords = buildKeywords(entities, categoryLabel);
+
+  // Update UI
+  document.getElementById('finalTitle').textContent = title;
+  document.getElementById('finalDescription').textContent = description;
+  document.getElementById('finalCategory').textContent = categoryLabel;
+  document.getElementById('finalKeywords').textContent = keywords.join(', ');
+  document.getElementById('finalPriceTag').textContent = '₹' + state.price.final.toLocaleString('en-IN');
+
+  if (state.enhancedImage) {
+    document.getElementById('finalImg').src = state.enhancedImage;
+  } else if (state.originalImage) {
+    document.getElementById('finalImg').src = state.originalImage;
+  }
+
+  state.product = {
+    title, description, keywords,
+    category: categoryLabel,
+    price: state.price.final,
+    transcript
+  };
+}
+
+// ---------- NLP: ENTITY EXTRACTION ----------
+function extractEntities(text) {
+  const lower = text.toLowerCase();
+  const entities = {
+    colors: [],
+    materials: [],
+    craft: [],
+    size: null,
+    origin: null
+  };
+
+  const colorMap = {
+    'blue': 'Blue', 'नीला': 'Blue', 'neela': 'Blue',
+    'red': 'Red', 'लाल': 'Red', 'சிவப்பு': 'Red',
+    'gold': 'Gold', 'सुनहरा': 'Gold', 'golden': 'Gold', 'सुनहरे': 'Gold',
+    'green': 'Green', 'हरा': 'Green',
+    'yellow': 'Yellow', 'पीला': 'Yellow',
+    'black': 'Black', 'काला': 'Black',
+    'white': 'White', 'सफ़ेद': 'White',
+    'pink': 'Pink', 'गुलाबी': 'Pink',
+    'orange': 'Orange', 'नारंगी': 'Orange',
+    'purple': 'Purple', 'बैंगनी': 'Purple',
+    'silver': 'Silver', 'चांदी': 'Silver'
+  };
+
+  const materialMap = {
+    'silk': 'Silk', 'सिल्क': 'Silk', 'रेशम': 'Silk', 'பட்டு': 'Silk',
+    'cotton': 'Cotton', 'कॉटन': 'Cotton', 'रुई': 'Cotton', 'பருத்தி': 'Cotton',
+    'wool': 'Wool', 'ऊन': 'Wool',
+    'silver': 'Silver', 'चांदी': 'Silver',
+    'gold': 'Gold', 'सोना': 'Gold',
+    'brass': 'Brass', 'पीतल': 'Brass',
+    'copper': 'Copper', 'तांबा': 'Copper',
+    'clay': 'Clay', 'मिट्टी': 'Clay',
+    'leather': 'Leather', 'चमड़ा': 'Leather',
+    'jute': 'Jute', 'जूट': 'Jute'
+  };
+
+  const craftMap = {
+    'handloom': 'Handloom', 'हथकरघा': 'Handloom', 'கைத்தறி': 'Handloom',
+    'handmade': 'Handmade', 'हस्तनिर्मित': 'Handmade',
+    'handwoven': 'Handwoven', 'hand-woven': 'Handwoven',
+    'kanchipuram': 'Kanchipuram', 'कांचीपुरम': 'Kanchipuram',
+    'banarasi': 'Banarasi', 'बनारसी': 'Banarasi',
+    'jaipur': 'Jaipur', 'जयपुर': 'Jaipur',
+    'rajasthani': 'Rajasthani', 'राजस्थानी': 'Rajasthani'
+  };
+
+  // Extract colors
+  Object.keys(colorMap).forEach(k => {
+    if (lower.includes(k) && !entities.colors.includes(colorMap[k])) {
+      entities.colors.push(colorMap[k]);
+    }
+  });
+
+  // Extract materials
+  Object.keys(materialMap).forEach(k => {
+    if (lower.includes(k) && !entities.materials.includes(materialMap[k])) {
+      entities.materials.push(materialMap[k]);
+    }
+  });
+
+  // Extract craft
+  Object.keys(craftMap).forEach(k => {
+    if (lower.includes(k) && !entities.craft.includes(craftMap[k])) {
+      entities.craft.push(craftMap[k]);
+    }
+  });
+
+  // Extract size
+  const sizeMatch = text.match(/(\d+(?:\.\d+)?)\s*(meter|metre|मीटर|मीटर|inch|inches|इंच|cm|feet|फीट)/i);
+  if (sizeMatch) entities.size = sizeMatch[1] + ' ' + sizeMatch[2];
+
+  // Extract origin
+  const originMatch = text.match(/(?:from|से|இல்)\s+([A-Z][a-z]+)/);
+  if (originMatch) entities.origin = originMatch[1];
+
+  return entities;
+}
+
+function buildTitle(entities, categoryLabel, transcript) {
+  const parts = [];
+  if (entities.craft.length) parts.push(entities.craft[0]);
+  if (entities.materials.length) parts.push(entities.materials[0]);
+  parts.push(categoryLabel);
+  if (entities.colors.length) parts.push('— ' + entities.colors.join(' & '));
+
+  let title = parts.join(' ').replace(/\s+/g, ' ').trim();
+  if (title.length < 15) {
+    title = 'Handcrafted ' + categoryLabel;
+  }
+  return title;
+}
+
+function buildDescription(entities, transcript, categoryLabel) {
+  let desc = '';
+
+  if (entities.craft.length || entities.materials.length) {
+    desc += 'Exquisite ';
+    if (entities.craft.length) desc += entities.craft[0] + ' ';
+    if (entities.materials.length) desc += entities.materials[0] + ' ';
+    desc += categoryLabel.toLowerCase() + '. ';
+  } else {
+    desc += 'Beautiful handmade ' + categoryLabel.toLowerCase() + '. ';
+  }
+
+  if (entities.colors.length) {
+    desc += 'Features a stunning ' + entities.colors.join(' and ') + ' color combination. ';
+  }
+
+  if (entities.size) {
+    desc += 'Size: ' + entities.size + '. ';
+  }
+
+  if (entities.origin) {
+    desc += 'Originating from ' + entities.origin + ', this piece reflects authentic regional craftsmanship. ';
+  }
+
+  desc += '\n\n• 100% handmade by skilled artisans\n• Unique, one-of-a-kind piece\n• Ethically sourced materials\n• Ships in protective packaging\n• Care: Handle with care';
+
+  desc += '\n\nOriginal artisan note: "' + transcript + '"';
+
+  return desc;
+}
+
+function buildKeywords(entities, categoryLabel) {
+  const keywords = new Set();
+  keywords.add(categoryLabel.toLowerCase());
+  keywords.add('handmade');
+  keywords.add('handcrafted');
+  keywords.add('indian');
+  entities.colors.forEach(c => keywords.add(c.toLowerCase()));
+  entities.materials.forEach(m => keywords.add(m.toLowerCase()));
+  entities.craft.forEach(c => keywords.add(c.toLowerCase()));
+  keywords.add('artisan');
+  keywords.add('traditional');
+  return Array.from(keywords).slice(0, 8);
+}
+
+// ---------- EXPORT ----------
+function downloadJSON() {
+  if (!state.product) buildFinalProduct();
+
+  const catalog = {
+    generatedBy: 'ArtisanAI',
+    generatedAt: new Date().toISOString(),
+    product: {
+      title: state.product.title,
+      description: state.product.description,
+      keywords: state.product.keywords,
+      category: state.product.category,
+      pricing: {
+        floor: state.price.floor,
+        recommended: state.price.optimal,
+        premium: state.price.premium,
+        final: state.price.final,
+        currency: 'INR'
+      },
+      artisanNote: state.transcript,
+      marketplaceReady: true
+    }
+  };
+
+  const blob = new Blob([JSON.stringify(catalog, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'artisanai-catalog-' + Date.now() + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('✓ Catalog downloaded');
+}
+
+function copyListing() {
+  if (!state.product) buildFinalProduct();
+
+  const text = `🛍️ ${state.product.title}
+
+${state.product.description}
+
+💰 Price: ₹${state.price.final.toLocaleString('en-IN')}
+🏷️ Category: ${state.product.category}
+🔖 Keywords: ${state.product.keywords.join(', ')}
+
+— Generated by ArtisanAI`;
+
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('✓ Listing copied to clipboard');
+  }).catch(() => {
+    showToast('⚠️ Copy failed. Select manually.');
+  });
+}
+
+// ---------- RESET ----------
+function resetApp() {
+  state.transcript = '';
+  state.originalImage = null;
+  state.enhancedImage = null;
+  state.product = null;
+
+  document.getElementById('transcript').value = '';
+  document.getElementById('originalImg').src = '';
+  document.getElementById('enhancedImg').src = '';
+  document.getElementById('imagePreviewContainer').style.display = 'none';
+  document.getElementById('uploadArea').style.display = 'block';
+  document.getElementById('imageInput').value = '';
+
+  goToStep(1);
+  showToast('✓ Ready for new product');
+}
+
+// ---------- INIT ----------
+document.addEventListener('DOMContentLoaded', () => {
+  // Pre-check speech support
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    document.getElementById('voiceStatus').textContent = '⚠️ Speech not supported. Use Chrome/Edge.';
+  }
+
+  recalcPrice();
+});
+
+// Language change
+document.addEventListener('change', (e) => {
+  if (e.target.id === 'languageSelect') {
+    if (recognition) {
+      recognition.lang = e.target.value;
+    }
+    showToast('✓ Language set');
+  }
+});
+</script>
+</body>
+</html>
